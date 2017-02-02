@@ -1,6 +1,7 @@
 let answer = document.getElementById('answer');
 let attempt = document.getElementById('attempt');
 
+
 function guess() {
     let input = document.getElementById('user-guess');
     //add functionality to guess function here
@@ -9,22 +10,6 @@ function guess() {
     }
     
     let valid  = validateInput(input.value);
-    
-    function getResults(){
-        let correct = 0;
-        if(!valid){
-            return false;
-        }else{
-            attempt.value++;
-            console.log(attempt.value);
-            if(Number(answer.value) === Number(input.value)){
-                correct++;
-                return true;
-            }else{
-                return false;
-            }
-        }
-    }  
     
     let result = getResults();
         
@@ -43,27 +28,10 @@ function guess() {
         return;
     }
     
-    function showAnswer(input){
-        let code = document.getElementById("code");
-        code.innerHTML = answer.value;
-        if(input){
-            code.className = "success";
-        }else{
-            code.className = "failure";
-        } 
-    }  
     
-    function showReplay(){
-        let guessing = document.getElementById("guessing-div");
-        let replay = document.getElementById("replay-div");
-        guessing.style.display = "none";
-        replay.style.display = "block";
-    }
 }
         
         
-    
-    
 
 
 //implement new functions
@@ -93,6 +61,40 @@ function validateInput(input){
     }
 }
 
+function getResults(){
+        let input = document.getElementById('user-guess');
+        let correct = 0;
+        if(!validateInput(input.value)){
+            return false;
+        }else{
+            attempt.value++;
+            console.log(attempt.value);
+            if(Number(answer.value) === Number(input.value)){
+                correct++;
+                return true;
+            }else{
+                return false;
+            }
+        }
+}  
 
+
+
+function showAnswer(input){
+        let code = document.getElementById("code");
+        code.innerHTML = answer.value;
+        if(input){
+            code.className = "success";
+        }else{
+            code.className = "failure";
+        } 
+    }  
+    
+    function showReplay(){
+        let guessing = document.getElementById("guessing-div");
+        let replay = document.getElementById("replay-div");
+        guessing.style.display = "none";
+        replay.style.display = "block";
+    }
 
 
