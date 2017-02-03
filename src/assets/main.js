@@ -11,7 +11,13 @@ function guess() {
     
     let valid  = validateInput(input.value);
     
-    let result = getResults();
+    if(!valid){
+        return false;
+    }else{
+        attempt.value++;
+    }
+    
+    let result = getResults(input.value);
         
     if(result){
         setMessage("You Win! :)");
@@ -37,7 +43,6 @@ function guess() {
 //implement new functions
 function setHiddenFields(){
     answer.value = Math.floor(Math.random()* (9999 - 0));
-    console.log(answer.value);
     attempt.value = 0;
     let answerString = answer.value.toString();
     while(answerString.length < 4){
@@ -61,23 +66,42 @@ function validateInput(input){
     }
 }
 
-function getResults(){
-        let input = document.getElementById('user-guess');
+function getResults(input){
+        let results = document.getElementById('results');
         let correct = 0;
-        if(!validateInput(input.value)){
-            return false;
-        }else{
-            attempt.value++;
-            console.log(attempt.value);
-            if(Number(answer.value) === Number(input.value)){
+        let inputArray = input.split("");
+        let finalInput = [];
+        let answerArr = answer.value.split("");
+        
+       for(let num = 0, len = inputArray.length; num < len; num++){
+            if(inputArray[num] === answerArr[num] ){
+                finalInput.push('<span class="glyphicon glyphicon-ok">' + inputArray[num] +'</span>');
+                console.log(finalInput);
                 correct++;
-                return true;
+            }else if(answerArr.indexOf(inputArray[num]) !== -1){
+                console.log(num);
+                console.log(inputArray[num]);
+                finalInput.push('<span class="glyphicon glyphicon-transfer">' + inputArray[num] +'</span>');
+                console.log(finalInput);
             }else{
-                return false;
+                finalInput.push('<span class="glyphicon glyphicon-remove">' + inputArray[num] +'</span>');
+                console.log(finalInput);
             }
         }
+        
+        let finalResult = finalInput.join(',');
+        console.log(finalResult);
+        
+        results.innerHTML ='<div class="row"><span class="col-md-6">' + finalResult  + '</span><div class="col-md-6">';
+        
+ 
+        if(correct === 4){
+            return true;
+        }else{
+            return false;
+        }
+        
 }  
-
 
 
 function showAnswer(input){
